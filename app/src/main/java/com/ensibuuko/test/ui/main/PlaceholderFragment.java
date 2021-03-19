@@ -22,8 +22,10 @@ import com.ensibuuko.test.databinding.ActivityMainBinding;
 import com.ensibuuko.test.databinding.FragmentMainBinding;
 import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PostAdapter;
+import com.ensibuuko.test.ui.adapters.UserAdapter;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ClickListener;
 
 import java.util.ArrayList;
@@ -46,8 +48,11 @@ public class PlaceholderFragment extends Fragment {
 
     List<Album> albumList = new ArrayList<>();
 
+    List<User> userList = new ArrayList<>();
+
     PostAdapter postAdapter;
     AlbumAdapter albumAdapter;
+    UserAdapter userAdapter;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -92,7 +97,7 @@ public class PlaceholderFragment extends Fragment {
             public void onChanged(@Nullable Integer s) {
                 switch (s){
                     case 2:
-                        getMyPosts();
+                        getUsers();
                         break;
                     case 3:
                         getAllAlbums();
@@ -161,6 +166,21 @@ public class PlaceholderFragment extends Fragment {
             });
             binding.listPosts.setAdapter(albumAdapter);
 
+        });
+
+
+    }
+
+    public void getUsers(){
+
+        realmViewModel.getAllUsers().observe(this, posts -> {
+
+            userList.clear();
+            userList.addAll(posts);
+
+
+            userAdapter = new UserAdapter(userList);
+            binding.listPosts.setAdapter(userAdapter);
         });
 
 
