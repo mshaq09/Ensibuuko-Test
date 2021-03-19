@@ -4,4 +4,7 @@
     <string name="tab_my_posts">Users</string>
     <string name="tab_albums">Albums</string>
 
+    <string name="tab_user_posts">User Posts</string>
+    <string name="tab_user">User Details</string>
+
 </resources>

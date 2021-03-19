@@ -62,6 +62,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             super(view);
             // Define click listener for the ViewHolder's View
 
+            view.setOnClickListener(this);
+
             name = view.findViewById(R.id.name);
             email = view.findViewById(R.id.email);
             website = view.findViewById(R.id.website);
