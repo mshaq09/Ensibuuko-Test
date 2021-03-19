@@ -9,6 +9,9 @@ public class Photos extends RealmObject {
 
     @PrimaryKey
     int id;
+    String title;
+    String url;
+    String thumbnailUrl;
 
     public int getAlbumId() {
         return albumId;
@@ -49,8 +52,4 @@ public class Photos extends RealmObject {
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
-
-    String title;
-    String url;
-    String thumbnailUrl;
 }

@@ -8,4 +8,5 @@
     <dimen name="title_size">16sp</dimen>
     <dimen name="title_size_s">8sp</dimen>
     <dimen name="title_size_m">12sp</dimen>
+    <dimen name="drawable_ring_size">4dp</dimen>
 </resources>
