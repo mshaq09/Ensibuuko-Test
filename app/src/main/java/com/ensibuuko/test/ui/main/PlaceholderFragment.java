@@ -1,5 +1,6 @@
 package com.ensibuuko.test.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PostAdapter;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.services.ClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +151,16 @@ public class PlaceholderFragment extends Fragment {
             albumList.addAll(albums);
 
             albumAdapter = new AlbumAdapter(requireActivity(),albumList);
-            binding.listPosts.setAdapter(postAdapter);
+            albumAdapter.setOnItemClickListener(new ClickListener() {
+                @Override
+                public void onItemClick(int position, View v) {
+                    Intent intent = new Intent(requireActivity(),AlbumActivity.class);
+                    intent.putExtra("id",albumList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
+            binding.listPosts.setAdapter(albumAdapter);
+
         });
 
 

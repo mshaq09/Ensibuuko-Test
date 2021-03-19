@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import com.ensibuuko.test.ui.dbUtlis.DbHelper;
 import com.ensibuuko.test.ui.dbUtlis.LiveRealmResults;
 import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
 
 public class RealmViewModel extends ViewModel {
@@ -35,6 +36,10 @@ public class RealmViewModel extends ViewModel {
 
     public LiveRealmResults<Posts> getMyPosts(int user){
         return new LiveRealmResults<>(repository.getUserPosts(user));
+    }
+
+    public LiveRealmResults<Photos> getAlbumPhotos(int id){
+        return new LiveRealmResults<>(repository.getAlbumPhotos(id));
     }
 
 

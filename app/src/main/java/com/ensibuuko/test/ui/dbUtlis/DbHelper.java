@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.services.ApiClient;
 import com.ensibuuko.test.ui.services.ApiService;
@@ -27,6 +28,7 @@ public class DbHelper {
         apiService = ApiClient.buildAPIService();
         getPosts();
         getAlbums();
+        getPhotos();
     }
 
 
@@ -56,6 +58,16 @@ public class DbHelper {
 
     }
 
+    public void insertPhotos(List<Photos> photos){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(photos);
+            }
+        });
+
+    }
+
     public RealmResults<Posts> getUserPosts(int user_id){
 
         return realm.where(Posts.class).equalTo("userId",user_id).findAllAsync();
@@ -65,6 +77,18 @@ public class DbHelper {
     public RealmResults<Album> getLocalAlbums(){
 
         return realm.where(Album.class).findAllAsync();
+
+    }
+
+    public RealmResults<Photos> getLocalPhotos(){
+
+        return realm.where(Photos.class).findAllAsync();
+
+    }
+
+    public RealmResults<Photos> getAlbumPhotos(int id){
+
+        return realm.where(Photos.class).equalTo("albumId",id).sort("id").findAllAsync();
 
     }
 
@@ -98,6 +122,23 @@ public class DbHelper {
 
             @Override
             public void onFailure(Call<List<Album>> call, Throwable t) {
+            }
+        });
+
+
+    }
+    public void getPhotos(){
+        apiService.getPhotos().enqueue(new Callback<List<Photos>>() {
+            @Override
+            public void onResponse(Call<List<Photos>> call,
+                                   Response<List<Photos>> response) {
+                if (response.isSuccessful()){
+                    insertPhotos(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Photos>> call, Throwable t) {
             }
         });
 

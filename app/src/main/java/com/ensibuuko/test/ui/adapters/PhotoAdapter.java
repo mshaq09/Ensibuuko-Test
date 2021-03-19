@@ -4,54 +4,51 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.ensibuuko.test.R;
-import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.services.ClickListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
-
-    List<Album> albumList;
+public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
+    List<Photos> photos;
     private static ClickListener clickListener;
+    Context context;
 
-
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-    public AlbumAdapter(Context context, List<Album> dataSet) {
-        albumList = dataSet;
+    public PhotoAdapter(Context context,List<Photos> photos){
+        this.photos = photos;
+        this.context = context;
     }
-
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_albums, parent, false);
+                .inflate(R.layout.photo_item, parent, false);
 
-        return new AlbumAdapter.ViewHolder(view);
+        return new PhotoAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        holder.title.setText(albumList.get(position).getTitle());
+
+        Photos photo = photos.get(position);
+        holder.item_title.setText(photo.getTitle());
+
+        Picasso.get().load(photo.getThumbnailUrl()).placeholder(R.drawable.ic_placeholder).into(holder.item_image);
+
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return photos.size();
     }
 
     /**
@@ -59,27 +56,26 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView title;
+        private final TextView item_title;
+        private final ImageView item_image;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
             view.setOnClickListener(this);
-            title = view.findViewById(R.id.title);
 
+            item_title = view.findViewById(R.id.item_title);
+            item_image = view.findViewById(R.id.item_image);
         }
 
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(getAdapterPosition(), view);
+            clickListener.onItemClick(getAdapterPosition(),view);
         }
     }
 
     public void setOnItemClickListener(ClickListener click) {
         clickListener = click;
     }
-
-
-
 
 }
