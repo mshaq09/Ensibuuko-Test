@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ApiClient;
 import com.ensibuuko.test.ui.services.ApiService;
 
@@ -29,6 +30,7 @@ public class DbHelper {
         getPosts();
         getAlbums();
         getPhotos();
+        getAllUsers();
     }
 
 
@@ -53,6 +55,16 @@ public class DbHelper {
             @Override
             public void execute(Realm realm) {
                 realm.insertOrUpdate(albums);
+            }
+        });
+
+    }
+
+    public void insertUsers(List<User> users){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(users);
             }
         });
 
@@ -83,6 +95,12 @@ public class DbHelper {
     public RealmResults<Photos> getLocalPhotos(){
 
         return realm.where(Photos.class).findAllAsync();
+
+    }
+
+    public RealmResults<User> getUsers(){
+
+        return realm.where(User.class).findAllAsync();
 
     }
 
@@ -139,6 +157,24 @@ public class DbHelper {
 
             @Override
             public void onFailure(Call<List<Photos>> call, Throwable t) {
+            }
+        });
+
+
+    }
+
+    public void getAllUsers(){
+        apiService.getUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call,
+                                   Response<List<User>> response) {
+                if (response.isSuccessful()){
+                    insertUsers(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
             }
         });
 

@@ -3,6 +3,7 @@ package com.ensibuuko.test.ui.services;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.models.User;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface ApiService {
 
     @GET("photos")
     Call<List<Photos>> getPhotos();
+
+    @GET("users")
+    Call<List<User>> getUsers();
 
 
 
