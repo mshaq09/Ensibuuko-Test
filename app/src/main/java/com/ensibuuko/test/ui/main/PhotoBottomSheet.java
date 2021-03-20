@@ -30,7 +30,7 @@ public class PhotoBottomSheet extends BottomSheetDialogFragment {
         View root = binding.getRoot();
 
 
-        Picasso.get().load(url).placeholder(R.drawable.ic_placeholder).into(binding.fullImage);
+        Picasso.get().load(url).into(binding.fullImage);
 
 
         return root;

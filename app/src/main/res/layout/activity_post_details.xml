@@ -74,6 +74,8 @@
             android:layout_height="wrap_content"
             android:text="@string/comments"
             android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="15sp"
             android:textColor="@color/black" />
 
