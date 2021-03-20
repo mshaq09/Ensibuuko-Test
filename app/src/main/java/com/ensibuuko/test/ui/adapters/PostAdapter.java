@@ -34,6 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(view);
             // Define click listener for the ViewHolder's View
 
+            view.setOnClickListener(this);
             textView = view.findViewById(R.id.title);
             body = view.findViewById(R.id.body);
         }
