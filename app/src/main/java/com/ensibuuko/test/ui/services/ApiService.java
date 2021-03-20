@@ -1,6 +1,7 @@
 package com.ensibuuko.test.ui.services;
 
 import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
@@ -26,6 +27,9 @@ public interface ApiService {
 
     @GET("users")
     Call<List<User>> getUsers();
+
+    @GET("comments")
+    Call<List<Comments>> getComments();
 
 
 
