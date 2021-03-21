@@ -6,5 +6,6 @@
 
     <string name="tab_user_posts">User Posts</string>
     <string name="tab_user">User Details</string>
+    <string name="comments">Comments</string>
 
 </resources>
