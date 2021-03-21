@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.ensibuuko.test.databinding.ActivityAlbumBinding;
 import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PhotoAdapter;
+import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.services.ClickListener;
@@ -40,7 +41,7 @@ public class AlbumActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        realmViewModel = new ViewModelProvider(this).get(RealmViewModel.class);
+        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(false)).get(RealmViewModel.class);
         binding.listPhotos.setLayoutManager(new GridLayoutManager(this, 2));
 
         init(getIntent().getIntExtra("id",0));

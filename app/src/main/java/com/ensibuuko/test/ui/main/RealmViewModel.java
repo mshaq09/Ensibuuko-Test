@@ -28,9 +28,9 @@ public class RealmViewModel extends ViewModel {
 
 
 
-    public RealmViewModel() {
+    public RealmViewModel(boolean start) {
 
-        repository = new DbHelper();
+        repository = new DbHelper(start);
         allPosts = new LiveRealmResults<>(repository.getAllPosts());
         allAlbums = new LiveRealmResults<>(repository.getLocalAlbums());
 
@@ -58,4 +58,5 @@ public class RealmViewModel extends ViewModel {
         // realm.close(); // Realm is bound to the lifecycle of the ViewModel, and is destroyed when no longer needed.
         super.onCleared();
     }
+
 }

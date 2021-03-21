@@ -14,6 +14,7 @@ import com.ensibuuko.test.R;
 import com.ensibuuko.test.databinding.ActivityPostDetailsBinding;
 import com.ensibuuko.test.ui.adapters.CommentAdapter;
 import com.ensibuuko.test.ui.adapters.UserAdapter;
+import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
 import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
@@ -45,7 +46,7 @@ public class PostDetailActivity extends AppCompatActivity {
         itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider));
         binding.commentList.addItemDecoration(itemDecorator);
 
-        realmViewModel = new ViewModelProvider(this).get(RealmViewModel.class);
+        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(false)).get(RealmViewModel.class);
 
         init(getIntent().getIntExtra("id",0));
     }

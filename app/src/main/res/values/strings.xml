@@ -7,5 +7,19 @@
     <string name="tab_user_posts">User Posts</string>
     <string name="tab_user">User Details</string>
     <string name="comments">Comments</string>
+    <string name="enter_description_here">Enter description here</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="username">Username</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="login">Login</string>
+    <string name="enter_username_msg">Please enter your username above to add a post.</string>
+    <string name="success">Success</string>
+    <string name="ok">OK</string>
+    <string name="success_msg">Post added successfully</string>
 
 </resources>

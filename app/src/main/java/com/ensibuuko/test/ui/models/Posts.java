@@ -1,5 +1,7 @@
 package com.ensibuuko.test.ui.models;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -10,6 +12,11 @@ public class Posts extends RealmObject {
     int id;
     String title;
     String body;
+
+    public Date getDate() {
+        return date;
+    }
+    Date date = new Date();
 
     public int getUserId() {
         return userId;

@@ -23,6 +23,7 @@ import com.ensibuuko.test.databinding.FragmentMainBinding;
 import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PostAdapter;
 import com.ensibuuko.test.ui.adapters.UserAdapter;
+import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
@@ -78,7 +79,7 @@ public class PlaceholderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        realmViewModel = new ViewModelProvider(this).get(RealmViewModel.class);
+        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(true)).get(RealmViewModel.class);
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);

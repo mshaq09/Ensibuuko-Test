@@ -16,6 +16,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,21 +26,26 @@ public class DbHelper {
     Realm realm;
     ApiService apiService;
 
-    public  DbHelper(){
+    public  DbHelper(boolean start){
         realm = Realm.getDefaultInstance();
-        apiService = ApiClient.buildAPIService();
-        getPosts();
-        getAlbums();
-        getPhotos();
-        getAllUsers();
-        getComments();
+
+        if(start){
+            apiService = ApiClient.buildAPIService();
+            getPosts();
+            getAlbums();
+            getPhotos();
+            getAllUsers();
+            getComments();
+        }
+
     }
+
 
 
     public RealmResults<Posts> getAllPosts(){
 
 
-        return realm.where(Posts.class).findAllAsync();
+        return realm.where(Posts.class).sort("date", Sort.DESCENDING).findAllAsync();
 
     }
     public void insertPosts(List<Posts> posts){
@@ -216,4 +222,5 @@ public class DbHelper {
 
 
     }
+
 }
