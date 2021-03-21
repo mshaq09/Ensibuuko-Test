@@ -47,6 +47,8 @@ class AddPostActivity :AppCompatActivity() {
 
                 if(verifyUser(username = text.toString())){
                     binding.username.text = (user?.username)
+                    Utils.save(Utils.NAME_KEY,user?.name!!,this@AddPostActivity)
+                    Utils.save(Utils.USERNAME_KEY,user?.username!!,this@AddPostActivity)
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
                     dialog.dismiss()
                 }else{

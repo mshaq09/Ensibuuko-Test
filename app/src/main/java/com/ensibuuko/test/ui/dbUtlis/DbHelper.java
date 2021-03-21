@@ -98,9 +98,38 @@ public class DbHelper {
 
     }
 
+    public void insertComment(Comments comment){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(comment);
+            }
+        });
+
+    }
+
     public RealmResults<Posts> getUserPosts(int user_id){
 
         return realm.where(Posts.class).equalTo("userId",user_id).findAllAsync();
+
+    }
+
+    public boolean deletePost(int post_id){
+
+        Posts post = realm.where(Posts.class).equalTo("id",post_id).findFirst();
+
+        if(post != null){
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                                              @Override
+                                              public void execute(Realm realm) {
+                                                  post.deleteFromRealm();
+                                              }
+                                          });
+
+            return true;
+        }
+
+        return false;
 
     }
 

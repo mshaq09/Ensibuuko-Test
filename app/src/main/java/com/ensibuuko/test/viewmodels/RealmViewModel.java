@@ -54,6 +54,14 @@ public class RealmViewModel extends ViewModel {
         return new LiveRealmResults<>(repository.getPostComments(id));
     }
 
+    public void addComment(Comments comment){
+        repository.insertComment(comment);
+    }
+
+    public boolean deletePost(int id){
+        return repository.deletePost(id);
+    }
+
 
     @Override
     protected void onCleared() {

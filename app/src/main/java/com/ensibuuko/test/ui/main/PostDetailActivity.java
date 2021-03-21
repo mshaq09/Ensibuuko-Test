@@ -29,6 +29,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private RealmViewModel realmViewModel;
     List<Comments> comments = new ArrayList<>();
     CommentAdapter commentAdapter;
+    int post_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     public void init(int id){
+        post_id = id;
         Realm realm = Realm.getDefaultInstance();
 
         Posts post = realm.where(Posts.class).equalTo("id",id).findFirst();
@@ -58,6 +60,13 @@ public class PostDetailActivity extends AppCompatActivity {
             binding.animToolbar.setTitle(post.getTitle());
             setUpComments(id);
         }
+
+        binding.sendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendComment(binding.commentText.getText().toString());
+            }
+        });
 
     }
 
@@ -80,4 +89,38 @@ public class PostDetailActivity extends AppCompatActivity {
         });
 
     }
+
+    public void sendComment(String text){
+        Realm realm = Realm.getDefaultInstance();
+        Comments comment = new Comments();
+        comment.setBody(text);
+        comment.setPostId(post_id);
+        String name = Utils.getStringKey(Utils.NAME_KEY,this);
+        if(name.isEmpty()){
+            comment.setName("Anonymous");
+        }else{
+            comment.setName(name);
+        }
+
+
+        // Get the current max id in the users table
+        // Get the current max id in the users table
+        Number maxId = realm.where(Comments.class).max("id");
+        // If there are no rows, currentId is null, so the next id must be 1
+        // If currentId is not null, increment it by 1
+        // If there are no rows, currentId is null, so the next id must be 1
+        // If currentId is not null, increment it by 1
+        int nextId = 1;
+        if (maxId != null){
+           nextId =  maxId.intValue() + 1;
+        }
+        comment.setId(nextId);
+
+        realmViewModel.addComment(comment);
+
+        setUpComments(post_id);
+        binding.commentText.setText("");
+        Utils.hideKeyboard(PostDetailActivity.this);
+    }
+
 }
