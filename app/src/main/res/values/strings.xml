@@ -21,5 +21,6 @@
     <string name="success">Success</string>
     <string name="ok">OK</string>
     <string name="success_msg">Post added successfully</string>
+    <string name="no_comments">No Comments</string>
 
 </resources>

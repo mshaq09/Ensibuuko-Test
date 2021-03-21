@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ensibuuko.test.R;
-import com.ensibuuko.test.databinding.ActivityMainBinding;
 import com.ensibuuko.test.databinding.FragmentMainBinding;
 import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PostAdapter;
@@ -28,10 +26,11 @@ import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ClickListener;
+import com.ensibuuko.test.viewmodels.PageViewModel;
+import com.ensibuuko.test.viewmodels.RealmViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -55,8 +54,8 @@ public class PlaceholderFragment extends Fragment {
     PostAdapter postAdapter;
     AlbumAdapter albumAdapter;
     UserAdapter userAdapter;
-
     int user_id;
+    boolean savedKey = false;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -79,13 +78,21 @@ public class PlaceholderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(true)).get(RealmViewModel.class);
+
+        savedKey = Utils.getKey(Utils.KEY_FIRSTTIME,requireActivity());
+
+        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(savedKey)).get(RealmViewModel.class);
+
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
             user_id = getArguments().getInt(ARG_USER_ID,0);
         }
         pageViewModel.setIndex(index);
+
+        if(savedKey){
+            Utils.save(Utils.KEY_FIRSTTIME,false,requireActivity());
+        }
 
 
     }

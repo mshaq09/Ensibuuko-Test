@@ -1,4 +1,4 @@
-package com.ensibuuko.test.ui.main;
+package com.ensibuuko.test.viewmodels;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,9 +1,10 @@
-package com.ensibuuko.test.ui.main;
+package com.ensibuuko.test.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
 import com.ensibuuko.test.ui.dbUtlis.DbHelper;
 import com.ensibuuko.test.ui.dbUtlis.LiveRealmResults;
+import com.ensibuuko.test.ui.main.Utils;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Photos;
@@ -33,6 +34,7 @@ public class RealmViewModel extends ViewModel {
         repository = new DbHelper(start);
         allPosts = new LiveRealmResults<>(repository.getAllPosts());
         allAlbums = new LiveRealmResults<>(repository.getLocalAlbums());
+
 
     }
 

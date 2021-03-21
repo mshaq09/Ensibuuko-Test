@@ -45,7 +45,7 @@ public class DbHelper {
     public RealmResults<Posts> getAllPosts(){
 
 
-        return realm.where(Posts.class).sort("date", Sort.DESCENDING).findAllAsync();
+        return realm.where(Posts.class).sort("date", Sort.ASCENDING).findAllAsync();
 
     }
     public void insertPosts(List<Posts> posts){

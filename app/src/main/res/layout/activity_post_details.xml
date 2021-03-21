@@ -88,6 +88,16 @@
 
         />
 
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/no_comments"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 
 

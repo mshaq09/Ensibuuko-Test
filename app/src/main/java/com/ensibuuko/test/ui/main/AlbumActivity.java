@@ -1,6 +1,5 @@
 package com.ensibuuko.test.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ensibuuko.test.databinding.ActivityAlbumBinding;
-import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PhotoAdapter;
 import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.services.ClickListener;
+import com.ensibuuko.test.viewmodels.RealmViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

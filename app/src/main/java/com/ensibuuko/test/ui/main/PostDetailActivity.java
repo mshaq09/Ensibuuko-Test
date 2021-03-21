@@ -13,12 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.ensibuuko.test.R;
 import com.ensibuuko.test.databinding.ActivityPostDetailsBinding;
 import com.ensibuuko.test.ui.adapters.CommentAdapter;
-import com.ensibuuko.test.ui.adapters.UserAdapter;
 import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
 import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Posts;
-import com.ensibuuko.test.ui.models.User;
-import com.ensibuuko.test.ui.services.ClickListener;
+import com.ensibuuko.test.viewmodels.RealmViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +68,15 @@ public class PostDetailActivity extends AppCompatActivity {
             comments.clear();
             comments.addAll(commentsList);
 
+            if(comments.size() > 0){
+                binding.empty.setVisibility(View.GONE);
+                commentAdapter = new CommentAdapter(comments);
+                binding.commentList.setAdapter(commentAdapter);
+            }else{
+                binding.commentList.setVisibility(View.GONE);
+                binding.empty.setVisibility(View.VISIBLE);
+            }
 
-            commentAdapter = new CommentAdapter(comments);
-
-            binding.commentList.setAdapter(commentAdapter);
         });
 
     }
