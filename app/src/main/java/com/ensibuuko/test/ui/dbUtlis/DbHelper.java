@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
@@ -31,6 +32,7 @@ public class DbHelper {
         getAlbums();
         getPhotos();
         getAllUsers();
+        getComments();
     }
 
 
@@ -80,6 +82,16 @@ public class DbHelper {
 
     }
 
+    public void insertComments(List<Comments> comments){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(comments);
+            }
+        });
+
+    }
+
     public RealmResults<Posts> getUserPosts(int user_id){
 
         return realm.where(Posts.class).equalTo("userId",user_id).findAllAsync();
@@ -107,6 +119,12 @@ public class DbHelper {
     public RealmResults<Photos> getAlbumPhotos(int id){
 
         return realm.where(Photos.class).equalTo("albumId",id).sort("id").findAllAsync();
+
+    }
+
+    public RealmResults<Comments> getPostComments(int postId){
+
+        return realm.where(Comments.class).equalTo("postId",postId).findAllAsync();
 
     }
 
@@ -175,6 +193,24 @@ public class DbHelper {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+            }
+        });
+
+
+    }
+
+    public void getComments(){
+        apiService.getComments().enqueue(new Callback<List<Comments>>() {
+            @Override
+            public void onResponse(Call<List<Comments>> call,
+                                   Response<List<Comments>> response) {
+                if (response.isSuccessful()){
+                    insertComments(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comments>> call, Throwable t) {
             }
         });
 

@@ -142,6 +142,14 @@ public class PlaceholderFragment extends Fragment {
             Log.e("here",""+postsList.size());
 
             postAdapter = new PostAdapter(requireActivity(),postsList);
+            postAdapter.setOnItemClickListener(new ClickListener() {
+                @Override
+                public void onItemClick(int position, View v) {
+                    Intent intent = new Intent(requireActivity(),PostDetailActivity.class);
+                    intent.putExtra("id",postsList.get(position).getId());
+                    startActivity(intent);
+                }
+            });
             binding.listPosts.setAdapter(postAdapter);
         });
 
@@ -160,7 +168,15 @@ public class PlaceholderFragment extends Fragment {
                 Log.e("here",""+postsList.size());
 
                 postAdapter = new PostAdapter(requireActivity(),postsList);
-                binding.listPosts.setAdapter(postAdapter);
+                postAdapter.setOnItemClickListener(new ClickListener() {
+                                                       @Override
+                                                       public void onItemClick(int position, View v) {
+                                                           Intent intent = new Intent(requireActivity(),PostDetailActivity.class);
+                                                           intent.putExtra("id",postsList.get(position).getId());
+                                                           startActivity(intent);
+                                                       }
+                                                   });
+                        binding.listPosts.setAdapter(postAdapter);
             });
 
         }
