@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Ensibuuko Test</string>
     <string name="tab_posts">All Posts</string>
-    <string name="tab_my_posts">My Posts</string>
+    <string name="tab_my_posts">Users</string>
     <string name="tab_albums">Albums</string>
+
+    <string name="tab_user_posts">User Posts</string>
+    <string name="tab_user">User Details</string>
+    <string name="comments">Comments</string>
+
 </resources>

@@ -1,57 +1,52 @@
 package com.ensibuuko.test.ui.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ensibuuko.test.R;
-import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ClickListener;
 
 import java.util.List;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
-    List<Album> albumList;
+    private List<User> users;
     private static ClickListener clickListener;
 
-
-    /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
-     */
-    public AlbumAdapter(Context context, List<Album> dataSet) {
-        albumList = dataSet;
+    public UserAdapter(List<User> userList){
+        this.users = userList;
     }
-
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_albums, parent, false);
+        View view = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.user_item, viewGroup, false);
 
-        return new AlbumAdapter.ViewHolder(view);
+        return new UserAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        holder.title.setText(albumList.get(position).getTitle());
+
+        User user = users.get(position);
+        holder.name.setText(user.getName());
+        holder.email.setText(user.getEmail());
+        holder.website.setText(user.getWebsite());
+
     }
 
     @Override
     public int getItemCount() {
-        return albumList.size();
+        return users.size();
     }
 
     /**
@@ -59,13 +54,19 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView title;
+        private final TextView name;
+        private final TextView email;
+        private final TextView website;
 
         public ViewHolder(View view) {
             super(view);
             // Define click listener for the ViewHolder's View
+
             view.setOnClickListener(this);
-            title = view.findViewById(R.id.title);
+
+            name = view.findViewById(R.id.name);
+            email = view.findViewById(R.id.email);
+            website = view.findViewById(R.id.website);
 
         }
 
@@ -78,8 +79,4 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public void setOnItemClickListener(ClickListener click) {
         clickListener = click;
     }
-
-
-
-
 }

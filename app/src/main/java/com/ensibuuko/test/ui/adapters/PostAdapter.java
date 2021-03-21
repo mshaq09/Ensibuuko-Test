@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ensibuuko.test.R;
 import com.ensibuuko.test.ui.dbUtlis.LiveRealmResults;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.services.ClickListener;
 
 import java.util.List;
 
@@ -18,13 +19,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
     private List<Posts> localDataSet;
+    private static ClickListener clickListener;
 
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textView;
         private final TextView body;
 
@@ -32,8 +34,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             super(view);
             // Define click listener for the ViewHolder's View
 
+            view.setOnClickListener(this);
             textView = view.findViewById(R.id.title);
             body = view.findViewById(R.id.body);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(), view);
         }
     }
 
@@ -71,5 +79,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    public void setOnItemClickListener(ClickListener click) {
+        clickListener = click;
     }
 }

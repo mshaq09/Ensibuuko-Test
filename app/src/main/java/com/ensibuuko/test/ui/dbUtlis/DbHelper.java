@@ -5,7 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.ensibuuko.test.ui.models.Album;
+import com.ensibuuko.test.ui.models.Comments;
+import com.ensibuuko.test.ui.models.Photos;
 import com.ensibuuko.test.ui.models.Posts;
+import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ApiClient;
 import com.ensibuuko.test.ui.services.ApiService;
 
@@ -27,6 +30,9 @@ public class DbHelper {
         apiService = ApiClient.buildAPIService();
         getPosts();
         getAlbums();
+        getPhotos();
+        getAllUsers();
+        getComments();
     }
 
 
@@ -56,6 +62,36 @@ public class DbHelper {
 
     }
 
+    public void insertUsers(List<User> users){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(users);
+            }
+        });
+
+    }
+
+    public void insertPhotos(List<Photos> photos){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(photos);
+            }
+        });
+
+    }
+
+    public void insertComments(List<Comments> comments){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(comments);
+            }
+        });
+
+    }
+
     public RealmResults<Posts> getUserPosts(int user_id){
 
         return realm.where(Posts.class).equalTo("userId",user_id).findAllAsync();
@@ -65,6 +101,30 @@ public class DbHelper {
     public RealmResults<Album> getLocalAlbums(){
 
         return realm.where(Album.class).findAllAsync();
+
+    }
+
+    public RealmResults<Photos> getLocalPhotos(){
+
+        return realm.where(Photos.class).findAllAsync();
+
+    }
+
+    public RealmResults<User> getUsers(){
+
+        return realm.where(User.class).findAllAsync();
+
+    }
+
+    public RealmResults<Photos> getAlbumPhotos(int id){
+
+        return realm.where(Photos.class).equalTo("albumId",id).sort("id").findAllAsync();
+
+    }
+
+    public RealmResults<Comments> getPostComments(int postId){
+
+        return realm.where(Comments.class).equalTo("postId",postId).findAllAsync();
 
     }
 
@@ -98,6 +158,59 @@ public class DbHelper {
 
             @Override
             public void onFailure(Call<List<Album>> call, Throwable t) {
+            }
+        });
+
+
+    }
+    public void getPhotos(){
+        apiService.getPhotos().enqueue(new Callback<List<Photos>>() {
+            @Override
+            public void onResponse(Call<List<Photos>> call,
+                                   Response<List<Photos>> response) {
+                if (response.isSuccessful()){
+                    insertPhotos(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Photos>> call, Throwable t) {
+            }
+        });
+
+
+    }
+
+    public void getAllUsers(){
+        apiService.getUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call,
+                                   Response<List<User>> response) {
+                if (response.isSuccessful()){
+                    insertUsers(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+            }
+        });
+
+
+    }
+
+    public void getComments(){
+        apiService.getComments().enqueue(new Callback<List<Comments>>() {
+            @Override
+            public void onResponse(Call<List<Comments>> call,
+                                   Response<List<Comments>> response) {
+                if (response.isSuccessful()){
+                    insertComments(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comments>> call, Throwable t) {
             }
         });
 
