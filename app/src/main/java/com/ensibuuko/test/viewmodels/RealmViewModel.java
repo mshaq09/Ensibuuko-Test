@@ -1,9 +1,10 @@
-package com.ensibuuko.test.ui.main;
+package com.ensibuuko.test.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
 import com.ensibuuko.test.ui.dbUtlis.DbHelper;
 import com.ensibuuko.test.ui.dbUtlis.LiveRealmResults;
+import com.ensibuuko.test.ui.main.Utils;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Comments;
 import com.ensibuuko.test.ui.models.Photos;
@@ -28,11 +29,12 @@ public class RealmViewModel extends ViewModel {
 
 
 
-    public RealmViewModel() {
+    public RealmViewModel(boolean start) {
 
-        repository = new DbHelper();
+        repository = new DbHelper(start);
         allPosts = new LiveRealmResults<>(repository.getAllPosts());
         allAlbums = new LiveRealmResults<>(repository.getLocalAlbums());
+
 
     }
 
@@ -52,10 +54,19 @@ public class RealmViewModel extends ViewModel {
         return new LiveRealmResults<>(repository.getPostComments(id));
     }
 
+    public void addComment(Comments comment){
+        repository.insertComment(comment);
+    }
+
+    public boolean deletePost(int id){
+        return repository.deletePost(id);
+    }
+
 
     @Override
     protected void onCleared() {
         // realm.close(); // Realm is bound to the lifecycle of the ViewModel, and is destroyed when no longer needed.
         super.onCleared();
     }
+
 }

@@ -1,13 +1,15 @@
 package com.ensibuuko.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.ensibuuko.test.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
+import com.ensibuuko.test.ui.main.AddPostActivity;
 import com.ensibuuko.test.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,13 +27,38 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setAdapter(sectionsPagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewPager);
 
+
+        binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if(tab.getPosition() == 0 || tab.getPosition() == 1){
+                    binding.fab.setVisibility(View.VISIBLE);
+                }else{
+                    binding.fab.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, AddPostActivity.class));
             }
         });
+
+
 
 
     }

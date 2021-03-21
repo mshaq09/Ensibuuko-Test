@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="?actionBarSize"
+        android:padding="@dimen/appbar_padding"
+        android:text="Add Post"
+        android:drawableLeft="@drawable/ic_baseline_arrow_back"
+        android:background="@color/purple_500"
+        android:layout_marginBottom="@dimen/title_size"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:text="@string/username"
+            android:layout_marginBottom="@dimen/title_size_s"
+            android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:text="@string/title"
+            android:layout_marginBottom="@dimen/title_size_s"
+            android:textColor="@color/black"/>
+
+
+    <EditText
+        android:inputType="textMultiLine"
+        android:lines="4"
+        android:id="@+id/title"
+        android:minLines="2"
+        android:gravity="top|start"
+        android:maxLines="10"
+        android:padding="8dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:hint="@string/enter_title"
+        android:background="@drawable/rounded_corner"
+        android:cursorVisible="true"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@null"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_size"
+        android:textStyle="bold"
+        android:text="@string/description"
+        android:layout_marginBottom="@dimen/title_size_s"
+        android:textColor="@color/black"/>
+
+
+    <EditText
+        android:inputType="textMultiLine"
+        android:lines="8"
+        android:id="@+id/desc"
+        android:minLines="6"
+        android:gravity="top|start"
+        android:maxLines="10"
+        android:padding="8dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:background="@drawable/rounded_corner"
+        android:hint="@string/enter_description_here"
+        android:cursorVisible="true"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@null"
+    />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:padding="@dimen/title_size_s"
+        android:textAllCaps="false"
+        android:id="@+id/save"
+        android:layout_margin="@dimen/title_size"
+        android:layout_gravity="right"/>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

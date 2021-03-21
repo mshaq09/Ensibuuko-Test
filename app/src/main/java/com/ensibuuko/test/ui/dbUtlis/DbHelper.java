@@ -16,6 +16,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,21 +26,26 @@ public class DbHelper {
     Realm realm;
     ApiService apiService;
 
-    public  DbHelper(){
+    public  DbHelper(boolean start){
         realm = Realm.getDefaultInstance();
-        apiService = ApiClient.buildAPIService();
-        getPosts();
-        getAlbums();
-        getPhotos();
-        getAllUsers();
-        getComments();
+
+        if(start){
+            apiService = ApiClient.buildAPIService();
+            getPosts();
+            getAlbums();
+            getPhotos();
+            getAllUsers();
+            getComments();
+        }
+
     }
+
 
 
     public RealmResults<Posts> getAllPosts(){
 
 
-        return realm.where(Posts.class).findAllAsync();
+        return realm.where(Posts.class).sort("date", Sort.ASCENDING).findAllAsync();
 
     }
     public void insertPosts(List<Posts> posts){
@@ -92,9 +98,38 @@ public class DbHelper {
 
     }
 
+    public void insertComment(Comments comment){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(comment);
+            }
+        });
+
+    }
+
     public RealmResults<Posts> getUserPosts(int user_id){
 
         return realm.where(Posts.class).equalTo("userId",user_id).findAllAsync();
+
+    }
+
+    public boolean deletePost(int post_id){
+
+        Posts post = realm.where(Posts.class).equalTo("id",post_id).findFirst();
+
+        if(post != null){
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                                              @Override
+                                              public void execute(Realm realm) {
+                                                  post.deleteFromRealm();
+                                              }
+                                          });
+
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -216,4 +251,5 @@ public class DbHelper {
 
 
     }
+
 }
