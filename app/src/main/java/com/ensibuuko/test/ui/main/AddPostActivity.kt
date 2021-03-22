@@ -16,7 +16,7 @@ import com.ensibuuko.test.ui.models.User
 import io.realm.Case
 import io.realm.Realm
 
-class AddPostActivity(context: Context) : AppCompatActivity() {
+class AddPostActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPostBinding
     private var user: User? = null

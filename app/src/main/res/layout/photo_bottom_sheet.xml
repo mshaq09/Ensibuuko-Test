@@ -17,7 +17,8 @@
         android:layout_height="match_parent"
         android:layout_margin="2dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_placeholder" />
+        app:srcCompat="@drawable/ic_placeholder"
+        android:contentDescription="full image" />
 
 
 </com.google.android.material.card.MaterialCardView >

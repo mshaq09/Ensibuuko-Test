@@ -34,7 +34,7 @@ public class EnsibuukoUnitTest {
     @Test
     public void verifyUser() {
 
-        AddPostActivity myObjectUnderTest = new AddPostActivity(mMockContext);
+        AddPostActivity myObjectUnderTest = new AddPostActivity();
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Realm.init(context);
         boolean result = myObjectUnderTest.verifyUser("bret");
