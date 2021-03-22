@@ -21,6 +21,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Posts> localDataSet;
     private static ClickListener clickListener;
 
+    public Context getContext() {
+        return context;
+    }
+
+    Context context;
+
 
     /**
      * Provide a reference to the type of views that you are using
@@ -52,6 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
      * by RecyclerView.
      */
     public PostAdapter(Context context,List<Posts> dataSet) {
+        this.context = context;
         localDataSet = dataSet;
     }
 
@@ -83,5 +90,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public void setOnItemClickListener(ClickListener click) {
         clickListener = click;
+    }
+
+    public void deleteTask(int position){
+        localDataSet.remove(position);
+        notifyItemRemoved(position);
     }
 }

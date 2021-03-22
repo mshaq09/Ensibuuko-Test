@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -15,22 +14,25 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ensibuuko.test.R;
-import com.ensibuuko.test.databinding.ActivityMainBinding;
 import com.ensibuuko.test.databinding.FragmentMainBinding;
 import com.ensibuuko.test.ui.adapters.AlbumAdapter;
 import com.ensibuuko.test.ui.adapters.PostAdapter;
 import com.ensibuuko.test.ui.adapters.UserAdapter;
+import com.ensibuuko.test.ui.dbUtlis.MyViewModelFactory;
+import com.ensibuuko.test.ui.dbUtlis.SwipeToDeleteCallback;
 import com.ensibuuko.test.ui.models.Album;
 import com.ensibuuko.test.ui.models.Posts;
 import com.ensibuuko.test.ui.models.User;
 import com.ensibuuko.test.ui.services.ClickListener;
+import com.ensibuuko.test.viewmodels.PageViewModel;
+import com.ensibuuko.test.viewmodels.RealmViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -54,8 +56,8 @@ public class PlaceholderFragment extends Fragment {
     PostAdapter postAdapter;
     AlbumAdapter albumAdapter;
     UserAdapter userAdapter;
-
     int user_id;
+    boolean savedKey = false;
 
     public static PlaceholderFragment newInstance(int index) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -78,13 +80,21 @@ public class PlaceholderFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        realmViewModel = new ViewModelProvider(this).get(RealmViewModel.class);
+
+        savedKey = Utils.getKey(Utils.KEY_FIRSTTIME,requireActivity());
+
+        realmViewModel = new ViewModelProvider(this,new MyViewModelFactory(savedKey)).get(RealmViewModel.class);
+
         int index = 1;
         if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
             user_id = getArguments().getInt(ARG_USER_ID,0);
         }
         pageViewModel.setIndex(index);
+
+        if(savedKey){
+            Utils.save(Utils.KEY_FIRSTTIME,false,requireActivity());
+        }
 
 
     }
@@ -133,13 +143,13 @@ public class PlaceholderFragment extends Fragment {
     }
 
     public void getResults(){
-
+        binding.progressBar.setVisibility(View.VISIBLE);
         realmViewModel.getAllPosts().observe(this, posts -> {
 
             postsList.clear();
             postsList.addAll(posts);
 
-            Log.e("here",""+postsList.size());
+
 
             postAdapter = new PostAdapter(requireActivity(),postsList);
             postAdapter.setOnItemClickListener(new ClickListener() {
@@ -150,7 +160,11 @@ public class PlaceholderFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(postAdapter));
+            itemTouchHelper.attachToRecyclerView(binding.listPosts);
             binding.listPosts.setAdapter(postAdapter);
+
+            binding.progressBar.setVisibility(View.GONE);
         });
 
 
@@ -165,7 +179,6 @@ public class PlaceholderFragment extends Fragment {
                 postsList.clear();
                 postsList.addAll(posts);
 
-                Log.e("here",""+postsList.size());
 
                 postAdapter = new PostAdapter(requireActivity(),postsList);
                 postAdapter.setOnItemClickListener(new ClickListener() {
@@ -187,7 +200,7 @@ public class PlaceholderFragment extends Fragment {
     }
 
     public void getAllAlbums(){
-
+        binding.progressBar.setVisibility(View.VISIBLE);
         realmViewModel.getAllAlbums().observe(this, albums -> {
 
             albumList.clear();
@@ -203,6 +216,7 @@ public class PlaceholderFragment extends Fragment {
                 }
             });
             binding.listPosts.setAdapter(albumAdapter);
+            binding.progressBar.setVisibility(View.GONE);
 
         });
 
