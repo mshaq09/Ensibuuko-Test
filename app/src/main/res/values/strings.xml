@@ -23,5 +23,7 @@
     <string name="success_msg">Post added successfully</string>
     <string name="no_comments">No Comments</string>
     <string name="enter_comment">enter comment</string>
+    <string name="title_empty">Title can\'t be empty</string>
+    <string name="desc_empty">Description can\'t be empty</string>
 
 </resources>
