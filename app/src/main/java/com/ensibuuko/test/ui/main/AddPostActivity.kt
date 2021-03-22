@@ -1,8 +1,8 @@
 package com.ensibuuko.test.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -16,12 +16,13 @@ import com.ensibuuko.test.ui.models.User
 import io.realm.Case
 import io.realm.Realm
 
-class AddPostActivity :AppCompatActivity() {
+class AddPostActivity(context: Context) : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPostBinding
     private var user: User? = null
     private  val type = InputType.TYPE_CLASS_TEXT or
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,10 @@ class AddPostActivity :AppCompatActivity() {
         showDialog()
 
         binding.save.setOnClickListener {
-            savePost(binding.title.text.toString(), binding.desc.text.toString())
+            if(validate()){
+                savePost(binding.title.text.toString(), binding.desc.text.toString())
+            }
+
         }
 
     }
@@ -47,8 +51,8 @@ class AddPostActivity :AppCompatActivity() {
 
                 if(verifyUser(username = text.toString())){
                     binding.username.text = (user?.username)
-                    Utils.save(Utils.NAME_KEY,user?.name!!,this@AddPostActivity)
-                    Utils.save(Utils.USERNAME_KEY,user?.username!!,this@AddPostActivity)
+                    Utils.save(Utils.NAME_KEY, user?.name!!, this@AddPostActivity)
+                    Utils.save(Utils.USERNAME_KEY, user?.username!!, this@AddPostActivity)
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
                     dialog.dismiss()
                 }else{
@@ -103,10 +107,22 @@ class AddPostActivity :AppCompatActivity() {
         }
     }
 
-   private fun verifyUser(username: String) :Boolean{
+    fun verifyUser(username: String) :Boolean{
         val realm = Realm.getDefaultInstance()
         user = realm.where(User::class.java).equalTo("username", username, Case.INSENSITIVE).findFirst()
        return user != null
+    }
+
+     fun validate(): Boolean{
+        if(binding.title.text.isEmpty()){
+            binding.title.error = getString(R.string.title_empty)
+            return false
+        }else if(binding.desc.text.isEmpty()){
+
+            binding.desc.error = getString(R.string.desc_empty)
+            return false
+        }
+        return true
     }
 
 }
